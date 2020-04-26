@@ -82,7 +82,7 @@ export default class App extends Component {
     }
     setupdate = (event) => {
         console.log(event.keyCode === 27);
-        // console.log(e);
+       
 
         let arr = this.state.items;
         if (event.key === "Enter") {
@@ -153,23 +153,6 @@ export default class App extends Component {
 
 
     displayList = (value) => {
-        // let allCheck = this.state.allCheck;
-        // let TotalCheck = [];
-        // TotalCheck = this.state.items.filter((item) => item.isChecked);
-
-        // if (value === "all") {
-        //     if (this.state.items.length > TotalCheck.length && allCheck) {
-        //         allCheck = false;
-        //     } else if (this.state.items.length === TotalCheck.length && !allCheck) {
-        //         allCheck = true;
-        //     }
-        // }
-        // if (value === "complete") {
-        //     if (TotalCheck.length < this.state.items.length) {
-        //         allCheck = false;
-        //         console.log("complete", allCheck);
-        //     }
-        // }
         this.setState({ display: value })
     }
 
@@ -182,9 +165,7 @@ export default class App extends Component {
             this.setState({ items: array })
         }
     }
-    // handle = (event) => {
-    //     
-    // }
+ 
 
 
     render() {
