@@ -81,9 +81,7 @@ export default class App extends Component {
         this.setState({ items: arr })
     }
     setupdate = (event) => {
-        console.log(event.keyCode === 27);
-       
-
+           
         let arr = this.state.items;
         if (event.key === "Enter") {
             for (let i = 0; i < arr.length; i++) {
@@ -94,15 +92,7 @@ export default class App extends Component {
             }
             this.setState({ items: arr })
         }
-        if (event.keyCode === 27) {
-            for (let i = 0; i < arr.length; i++) {
-                const item = arr[i];
-                if (item.isDisplay === true) {
-                    (arr[i].isDisplay = false)
-                }
-            }
-            this.setState({ items: arr })
-        }
+       
     }
     handleKeyPress = (text, key) => {
         const arr = this.state.items;
