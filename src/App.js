@@ -14,13 +14,31 @@ export default class App extends Component {
         allCheck: false,
         display: "all"
     }
-    handleChange = (e) => {
 
+    
+    componentDidMount() {
+        this.userData = JSON.parse(localStorage.getItem("todo"));
+        if (localStorage.getItem("todo")) {
+            this.setState({
+                items: this.userData.items,
+                currentItem: {
+                    text: this.userData.currentItem.text,
+                    key: this.userData.currentItem.key,
+                },
+            });
+        }
+    }
+
+    componentWillUpdate(props, state) {
+        localStorage.setItem("todo", JSON.stringify(state))
+    }
+
+     handleChange = (e) => {
         this.setState({
-
             currentItem: { text: e.target.value, key: Date.now(), isChecked: false, isDisplay: false },
         });
-    }
+     }
+
 
     handleclick = (e) => {
         e.preventDefault();
@@ -33,7 +51,6 @@ export default class App extends Component {
             Total = this.state.items.filter((item) => !item.isChecked);
             let allCheck = false;
             if (array.length >= Total.length) {
-                console.log("hello");
                 allCheck = false
             } else {
                 allCheck = true
@@ -70,9 +87,11 @@ export default class App extends Component {
         for (let i = 0; i < arr.length; i++) {
             const item = arr[i];
             arr[i].text = arr[i].text.trim()
+            arr[i].isDisplay = false
             if (item.key === e) {
                 if (item.isDisplay === false) {
                     (arr[i].isDisplay = true)
+                    // document.getElementById("txt" + e).autofocus = true;
                 } else {
                     (arr[i].isDisplay = false)
                 }
@@ -81,7 +100,6 @@ export default class App extends Component {
         this.setState({ items: arr })
     }
     setupdate = (event) => {
-           
         let arr = this.state.items;
         if (event.key === "Enter") {
             for (let i = 0; i < arr.length; i++) {
@@ -92,10 +110,22 @@ export default class App extends Component {
             }
             this.setState({ items: arr })
         }
-       
     }
+
+    handleFocus = () => {
+        let arr = this.state.items;
+        for (let i = 0; i < arr.length; i++) {
+            const item = arr[i];
+            if (item.isDisplay === true) {
+                (arr[i].isDisplay = false)
+            }
+        }
+        this.setState({ items: arr })
+    }
+
     handleKeyPress = (text, key) => {
         const arr = this.state.items;
+
         for (let i = 0; i < arr.length; i++) {
             const item = arr[i];
             if (item.key === key) {
@@ -143,7 +173,7 @@ export default class App extends Component {
 
 
     displayList = (value) => {
-        this.setState({ display: value })
+       this.setState({ display: value })
     }
 
     deleteAll = (e) => {
@@ -155,7 +185,7 @@ export default class App extends Component {
             this.setState({ items: array })
         }
     }
- 
+
 
 
     render() {
@@ -199,7 +229,7 @@ export default class App extends Component {
                             </form>
                         </div>
                         <table className="list" >
-                            <List item={array} handledel={this.handledel} handleUpdate={this.handleUpdate} handleKeyPress={this.handleKeyPress} setupdate={this.setupdate} handleCheck={this.handleCheck} />
+                            <List item={array} handledel={this.handledel} handleUpdate={this.handleUpdate} handleKeyPress={this.handleKeyPress} setupdate={this.setupdate} handleCheck={this.handleCheck} handleFocus={this.handleFocus} />
                         </table><br />
                         <Footer item={arr} displayList={this.displayList} deleteAll={this.deleteAll} Total={Total} selectedBtn={selectedBtn} />
                     </div>
